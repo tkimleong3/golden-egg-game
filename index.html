@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Golden Egg Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #fef8e7;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      margin-top: 30px;
+      color: #b47b00;
+    }
+    #egg {
+      width: 200px;
+      margin: 40px auto;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    #egg:active {
+      transform: scale(0.95);
+    }
+    #result {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      margin-top: 20px;
+    }
+    #user-info {
+      margin-top: 10px;
+      font-size: 16px;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🥚 Crack the Golden Egg!</h1>
+  <img id="egg" src="https://i.imgur.com/FHgZ6Id.png" alt="Golden Egg">
+  <div id="result">Tap the egg to try your luck!</div>
+  <div id="user-info"></div>
+
+  <script>
+    // 1. Get userId from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const userId = urlParams.get("userId") || "guest";
+    document.getElementById("user-info").textContent = "User ID: " + userId;
+
+    // 2. Configure win rate (e.g., 20%)
+    const winRate = 0.2;
+    let played = false;
+
+    // 3. Handle egg click
+    document.getElementById("egg").addEventListener("click", () => {
+      if (played) return;
+
+      played = true; // Prevent multiple clicks
+      const isWin = Math.random() < winRate;
+      const resultText = isWin
+        ? `🎉 Congrats ${userId}, you WON!`
+        : `😢 Sorry ${userId}, try again next time!`;
+      
+      document.getElementById("result").textContent = resultText;
+
+      // Optional: Send result to server or Google Sheets
+      // (Use fetch() or Google Apps Script endpoint if needed)
+    });
+  </script>
+
+</body>
+</html>
